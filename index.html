@@ -7,14 +7,18 @@
     <script src="./src/index.js" defer></script>
 </head>
 <body>
-    <h1>Факторіал числа</h1>
-    <form id="factorial-form">
+    <h1>Покупка алкоголю</h1>
+    <form id="alcohol-form">
         <label>
-            Введіть число:
-            <input type="number" id="number" required />
+            Ім'я користувача:
+            <input type="text" id="name" required />
         </label>
-        <button type="submit">Обчислити</button>
+        <label>
+            Вік:
+            <input type="number" id="age" required />
+        </label>
+        <button>Купити алкоголь</button>
     </form>
-    <ol id="factorial-steps"></ol>
+    <div id="message"></div>
 </body>
 </html>
