@@ -1,114 +1,52 @@
-const user: { name: string, email: string, password: string } = {
-    name: 'John',
-    email: 'john@example.com',
-    password: 'secret'
-};
-
-// console.log(user);
-
-
-type Product = {
-    name: string;
-    price: number;
-    quantity: number
-};
-
-const products: Array<Product> = [
-    { name: 'Футболка', price: 25, quantity: 10 },
-    { name: 'Шорти', price: 30, quantity: 15 },
-    { name: 'Носки', price: 5, quantity: 20 }
-];
-
-// console.log(products);
-
-
 /*
 
-Задача: Контактна книга з можливістю групування контактів
-
-Створіть програму для управління контактами з можливістю створення груп контактів.
-Кожен контакт має ім'я та може містити телефон та електронну адресу.
-Група контактів - це колекція контактів, які об'єднані за певним критерієм, наприклад, робочі контакти, друзі, родина, тощо
+Необхідно розробити програму для обліку витрат за покупками в магазині.
+Програма повинна приймати на вхід інформацію про куплені товари і їх вартість,
+а також вид оплати (готівка чи карта).
+На виході програма повинна виводити загальну суму витрат.
+При тому, потрібно виводити, яка сума була витрачена картою, а яка сума була витрачена готівкою
 
 
 */
 
-type Contact = {
-    name: string;
-    phone?: string;
-    email?: string;
+type Purchase = {
+    product: string,
+    price: number;
+    paymentMethod: 'готівка' | 'карта';
 };
 
-type ContactGroup = {
-    name: string,
-    contacts: Array<Contact>
-};
+function calculateExpenses(purchases: Array<Purchase>): {
+    total: number;
+    cashTotal: number;
+    cardTotal: number
+} {
+    let total = 0;
+    let cashTotal = 0;
+    let cardTotal = 0;
 
-// Просто якась колекція контактів
-const contacts: Array<Contact> = [
-    { name: 'John', phone: '123-456-7890' },
-    { name: 'Jane', email: 'jane@example.com' },
-    { name: 'Mike' }
-];
+    for(const purchase of purchases) {
+        total += purchase.price;
 
-// Функція для створення нового контакту
-function createContact(name: string, phone?: string, email?: string): Contact {
+        if(purchase.paymentMethod === 'готівка') {
+            cashTotal += purchase.price;
+        } else {
+            cardTotal += purchase.price;
+        }
+    }
+
     return {
-        name,
-        phone,
-        email
+        total,
+        cashTotal,
+        cardTotal
     };
-};
-
-const newContact = createContact('Alice', '987-654-3210', 'alice@example.com');
-
-// Колекція груп контактів
-const contactsGroup: Array<ContactGroup> = [
-    { name: 'Friends', contacts: [ contacts[0] ] },
-    { name: 'Family', contacts: [ contacts[1] ] }
-];
-
-// Функція, яка додає контакт до групи
-function addToGroup(contact: Contact, groupName: string) {
-    const group = contactsGroup.find(group => group.name === groupName);
-    if(group) {
-        group.contacts.push(contact);
-    } else {
-        console.log(`Група ${groupName} не знайдена!`);
-    }
-};
-
-addToGroup(newContact, 'Friends');
-addToGroup(contacts[2], 'Family');
-
-// console.log(contactsGroup);
-
-
-
-
-// МЕРЕЖЕВИЙ ЗАПИТ
-
-type User = {
-    name: {
-        first: string;
-        last: string;
-    };
-    email: string;
-};
-
-async function fetchUsers(): Promise<User[]> {
-    try {
-        const response = await fetch('https://randomuser.me/api/?results=100');
-        const data: { results: User[] } = await response.json();
-
-        return data.results;
-    } catch (error) {
-        console.error(error);
-        return [];
-    }
 }
 
-fetchUsers()
-.then((users: User[]) => {
-    console.log(users);
-});
+
+const purchases: Array<Purchase> = [
+    { product: 'Футболка', price: 25, paymentMethod: 'готівка' },
+    { product: 'Шорти', price: 30, paymentMethod: 'карта' },
+    { product: 'Носки', price: 5, paymentMethod: 'готівка' }
+];
+
+const expenses = calculateExpenses(purchases);
+console.log(expenses);
