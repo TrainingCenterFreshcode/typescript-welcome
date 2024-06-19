@@ -1,36 +1,95 @@
 /*
 
-Необхідно розробити програму для обліку витрат за покупками в магазині.
-Програма повинна приймати на вхід інформацію про куплені товари і їх вартість,
-а також вид оплати (готівка чи карта).
-На виході програма повинна виводити загальну суму витрат.
-При тому, потрібно виводити, яка сума була витрачена картою, а яка сума була витрачена готівкою
+Задача 1
+
+Управління фінансами:
+Створіть клас Account для ведення банківського рахунку
+Мають бути такі поля:
+- balance
+- status
+- метод додавання коштів
+- метод зняття коштів
+- метод відображення поточного стану рахунку
 
 
 */
-function calculateExpenses(purchases) {
-    let total = 0;
-    let cashTotal = 0;
-    let cardTotal = 0;
-    for (const purchase of purchases) {
-        total += purchase.price;
-        if (purchase.paymentMethod === 'готівка') {
-            cashTotal += purchase.price;
+class Account {
+    constructor(initialBalance) {
+        this._balance = initialBalance;
+        this.status = 'active';
+    }
+    deposit(amount) {
+        this._balance += amount;
+    }
+    withdraw(amount) {
+        if (this._balance - amount >= 0) {
+            this._balance -= amount;
         }
         else {
-            cardTotal += purchase.price;
+            console.log('Insufficient funds');
         }
     }
-    return {
-        total,
-        cashTotal,
-        cardTotal
-    };
+    get balance() {
+        return this._balance;
+    }
+    set balance(value) {
+        this._balance = value;
+    }
 }
-const purchases = [
-    { product: 'Футболка', price: 25, paymentMethod: 'готівка' },
-    { product: 'Шорти', price: 30, paymentMethod: 'карта' },
-    { product: 'Носки', price: 5, paymentMethod: 'готівка' }
-];
-const expenses = calculateExpenses(purchases);
-console.log(expenses);
+const account = new Account(1000);
+// console.log('Initial balance: ', account.balance);
+account.balance = 2000;
+// console.log('Updated balance: ', account.balance);
+account.deposit(400);
+account.withdraw(1000);
+/*
+
+
+Управління замовленнями:
+Створіть клас Order, що представляє замовлення з полями для
+товарів (items),
+загальної вартості (total),
+статусу замовлення (status)
+
++ реалізуати методи для додавання товарів,
+розрахунку загальної вартості та
+відображення інформації про замовлення
+
+
+*/
+class Order {
+    constructor() {
+        this._items = [];
+        this._total = 0;
+        this._status = 'pending';
+    }
+    addItem(item, price) {
+        this._items.push(item);
+        this._total += price;
+    }
+    calculateTotal() {
+        return this._total;
+    }
+    getOrderInfo() {
+        console.log('Items: ', this._items);
+        console.log('Total: ', this._total);
+        console.log('Status: ', this._status);
+    }
+    get items() {
+        return this._items;
+    }
+    get total() {
+        return this._total;
+    }
+    get status() {
+        return this._status;
+    }
+    set status(value) {
+        this._status = value;
+    }
+}
+const order = new Order();
+order.addItem('Laptop', 10000);
+order.addItem('Smartphone', 15000);
+order.status = 'done';
+order.getOrderInfo();
