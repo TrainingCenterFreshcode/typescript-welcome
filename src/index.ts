@@ -1,61 +1,56 @@
 /*
 
+Задача: Бібліотека
 
-Магазин електроніки
 
-Створіть абстрактний клас Product
+Створіть абстрактний клас Item.
 Поля:
-- назва товару
-- ціна товару
-- кількість товару на складі
+- назва
+- кількість сторінок
+- кількість на складі
 
-Потрібні геттери/сеттери для цих полів
+Створіть 2 похідні класи: Book, Magazine.
 
+У клас Book додайте додаткове поле - автор книги.
+У клас Magazine додайте додактове поле - видавництво.
 
-Laptop
-- розмір екрану
-
-Smartphone
-- роздільна здатність
-
-Кожен з підкласів має мати метод getProductDetails(), який повертає рядок з інформацією про товар
+Кожен з підкласів має мати метод getItemDetails(), який повертає рядок з інформацією про Item
 
 */
 
-abstract class Product {
-    constructor(
-        public name: string,
-        public price: number,
-        public quantity: number
-    ) {}
 
-    abstract getProductDetails(): string;
+abstract class Item {
+    constructor(public title: string, public pages: number, public quantity: number) {}
+
+    abstract getItemDetails(): string;
 }
 
-class Laptop extends Product {
-    constructor(name: string, price: number, quantity: number, public screenSize: number) {
-        super(name, price, quantity);
-        this.screenSize = screenSize;
+class Book extends Item {
+    constructor(title: string, pages: number, quantity: number, public author: string) {
+        super(title, pages, quantity);
+        this.author = author;
     }
 
-    getProductDetails(): string {
-        return `Laptop: ${this.name}, Price: ${this.price}, Screen size: ${this.screenSize}`;
+    getItemDetails(): string {
+        return `Book: ${this.title}, Pages: ${this.pages}, Author: ${this.author}`;
     }
 }
 
-class Smartphone extends Product {
-    constructor(name: string, price: number, quantity: number, public resolution: string) {
-        super(name, price, quantity);
-        this.resolution = resolution;
+
+class Magazine extends Item {
+    constructor(title: string, pages: number, quantity: number, public publisher: string) {
+        super(title, pages, quantity);
+        this.publisher = publisher;
     }
 
-    getProductDetails(): string {
-        return `Smartphone: ${this.name}, Price: ${this.price}, Resolution: ${this.resolution}`;
+    getItemDetails(): string {
+        return `Magazine: ${this.title}, Pages: ${this.pages}, Publisher: ${this.publisher}`;
     }
 }
 
-const laptop = new Laptop('Dell XPS 15', 1500, 10, 15.6);
-const smartphone = new Smartphone('iPhone 12', 999, 20, '2532x1170');
 
-console.log(laptop.getProductDetails());
-console.log(smartphone.getProductDetails());
+const book = new Book('Book name', 150, 5, 'Book author');
+const magazine = new Magazine('Magazine name', 15, 8, 'Magazine publisher');
+
+console.log(book.getItemDetails());
+console.log(magazine.getItemDetails());
