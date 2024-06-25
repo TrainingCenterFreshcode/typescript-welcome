@@ -1,26 +1,25 @@
-const PI = 3.14;
+/*
 
-namespace Geometry {
-    export const PI = 3.1415926535;
+
+Створіть простір імен MathFunctions, який містить функції для розрахунку площі кола та площі прямокутника.
+Додайте також коснтанту PI, яка має числове значення 3.14.
+Протестуйте, щоб все працювало.
+
+
+
+*/
+
+namespace MathFunctions {
+    export const PI = 3.14;
 
     export function calculateCircleArea(radius: number): number {
-        return PI * radius * radius;
+        return PI * radius ** 2;
     }
 
-    export class Point {
-        constructor(public x: number, public y: number) {}
-
-        distanceToOrigin(): number {
-            return Math.sqrt(this.x * this.x + this.y * this.y);
-        }
+    export function calculateRectangleArea(width: number, height: number): number {
+        return width * height;
     }
 }
 
-namespace GeometryNew {
-    export const PI = 3.14159265358979323846;
-}
-
-console.log('PI: ', GeometryNew.PI);
-//console.log(Geometry.calculateCircleArea(5));
-// const point = new Geometry.Point(3, 4);
-// console.log(point.distanceToOrigin());
+// console.log(MathFunctions.calculateCircleArea(3));
+console.log(MathFunctions.calculateRectangleArea(3, 4));
