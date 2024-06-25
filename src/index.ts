@@ -1,56 +1,26 @@
-/*
+const PI = 3.14;
 
-Задача: Бібліотека
+namespace Geometry {
+    export const PI = 3.1415926535;
 
-
-Створіть абстрактний клас Item.
-Поля:
-- назва
-- кількість сторінок
-- кількість на складі
-
-Створіть 2 похідні класи: Book, Magazine.
-
-У клас Book додайте додаткове поле - автор книги.
-У клас Magazine додайте додактове поле - видавництво.
-
-Кожен з підкласів має мати метод getItemDetails(), який повертає рядок з інформацією про Item
-
-*/
-
-
-abstract class Item {
-    constructor(public title: string, public pages: number, public quantity: number) {}
-
-    abstract getItemDetails(): string;
-}
-
-class Book extends Item {
-    constructor(title: string, pages: number, quantity: number, public author: string) {
-        super(title, pages, quantity);
-        this.author = author;
+    export function calculateCircleArea(radius: number): number {
+        return PI * radius * radius;
     }
 
-    getItemDetails(): string {
-        return `Book: ${this.title}, Pages: ${this.pages}, Author: ${this.author}`;
+    export class Point {
+        constructor(public x: number, public y: number) {}
+
+        distanceToOrigin(): number {
+            return Math.sqrt(this.x * this.x + this.y * this.y);
+        }
     }
 }
 
-
-class Magazine extends Item {
-    constructor(title: string, pages: number, quantity: number, public publisher: string) {
-        super(title, pages, quantity);
-        this.publisher = publisher;
-    }
-
-    getItemDetails(): string {
-        return `Magazine: ${this.title}, Pages: ${this.pages}, Publisher: ${this.publisher}`;
-    }
+namespace GeometryNew {
+    export const PI = 3.14159265358979323846;
 }
 
-
-const book = new Book('Book name', 150, 5, 'Book author');
-const magazine = new Magazine('Magazine name', 15, 8, 'Magazine publisher');
-
-console.log(book.getItemDetails());
-console.log(magazine.getItemDetails());
+console.log('PI: ', GeometryNew.PI);
+//console.log(Geometry.calculateCircleArea(5));
+// const point = new Geometry.Point(3, 4);
+// console.log(point.distanceToOrigin());

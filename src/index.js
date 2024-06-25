@@ -1,50 +1,27 @@
-/*
-
-Задача: Бібліотека
-
-
-Створіть абстрактний клас Item.
-Поля:
-- назва
-- кількість сторінок
-- кількість на складі
-
-Створіть 2 похідні класи: Book, Magazine.
-
-У клас Book додайте додаткове поле - автор книги.
-У клас Magazine додайте додактове поле - видавництво.
-
-Кожен з підкласів має мати метод getItemDetails(), який повертає рядок з інформацією про Item
-
-*/
-class Item {
-    constructor(title, pages, quantity) {
-        this.title = title;
-        this.pages = pages;
-        this.quantity = quantity;
+const PI = 3.14;
+var Geometry;
+(function (Geometry) {
+    Geometry.PI = 3.1415926535;
+    function calculateCircleArea(radius) {
+        return Geometry.PI * radius * radius;
     }
-}
-class Book extends Item {
-    constructor(title, pages, quantity, author) {
-        super(title, pages, quantity);
-        this.author = author;
-        this.author = author;
+    Geometry.calculateCircleArea = calculateCircleArea;
+    class Point {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        distanceToOrigin() {
+            return Math.sqrt(this.x * this.x + this.y * this.y);
+        }
     }
-    getItemDetails() {
-        return `Book: ${this.title}, Pages: ${this.pages}, Author: ${this.author}`;
-    }
-}
-class Magazine extends Item {
-    constructor(title, pages, quantity, publisher) {
-        super(title, pages, quantity);
-        this.publisher = publisher;
-        this.publisher = publisher;
-    }
-    getItemDetails() {
-        return `Magazine: ${this.title}, Pages: ${this.pages}, Publisher: ${this.publisher}`;
-    }
-}
-const book = new Book('Book name', 150, 5, 'Book author');
-const magazine = new Magazine('Magazine name', 15, 8, 'Magazine publisher');
-console.log(book.getItemDetails());
-console.log(magazine.getItemDetails());
+    Geometry.Point = Point;
+})(Geometry || (Geometry = {}));
+var GeometryNew;
+(function (GeometryNew) {
+    GeometryNew.PI = 3.14159265358979323846;
+})(GeometryNew || (GeometryNew = {}));
+console.log('PI: ', GeometryNew.PI);
+//console.log(Geometry.calculateCircleArea(5));
+// const point = new Geometry.Point(3, 4);
+// console.log(point.distanceToOrigin());
