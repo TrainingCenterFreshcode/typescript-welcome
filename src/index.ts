@@ -1,18 +1,38 @@
-
 /*
 
-Створіть клас DataMerger, який має метод merge, що приймає масиви будь-якого типу та об'єднує їх у один масив
+Створіть клас Stack, який реалізує стек.
+Методи push та pop мають додавати та видаляти елементи зі стеку відповідно.
+Використайте generic-тип, щоб стек міг зберігати елементи будь-якого типу.
 
 
 */
 
-class DataMerger<T0, T1> {
-    merge(arr1: T0[], arr2: T1[]): (T0 | T1)[] {
-        return [...arr1, ...arr2];
-    } 
+class Stack<T> {
+    private items: T[];
+
+    constructor() {
+        this.items = [];
+    }
+
+    // далі методи push та pop
+
+    push(item: T): void {
+        this.items.push(item);
+    }
+
+    pop(): T | undefined {
+        return this.items.pop();
+    }
 }
 
-const dataMerger = new DataMerger();
-const result = dataMerger.merge([1, 2, 3], ['a', 'b', 'c']);
+const numberStack = new Stack<number>();
+const stringStack = new Stack<string>();
 
-console.log(result);
+numberStack.push(1);
+numberStack.push(2);
+numberStack.push(3);
+
+console.log(numberStack.pop());
+
+stringStack.push('Hello');
+stringStack.push('World');
