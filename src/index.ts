@@ -1,59 +1,44 @@
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    age?: number;
+/*
+
+Створити інтерфейс Shape, який містить метод calculateArea().
+Потім створити інтерфейси Circle та Rectangle, які розширюють (extends) інтерфейс Shape.
+
+Створити класи з реалізацією кола та прямокутника - CircleImpl та RectangleImpl відповідно.
+Реалізувати в класах-імплементаціях метод calculateArea() для обчислення площі кола та прямокутника.
+
+*/
+
+interface Shape {
+    calculateArea(): number;
 }
 
-const user1: User = {
-    id: 1,
-    name: 'John',
-    email: 'john@gmail.com'
+interface Circle extends Shape {
+    radius: number;
 }
 
-// extends
-
-interface Animal {
-    nickname: string;
-    age: number;
+interface Rectangle extends Shape {
+    width: number;
+    height: number;
 }
 
-interface Dog extends Animal {
-    breed: string;
-}
+class CircleImpl implements Circle {
+    constructor(public radius: number) {}
 
-const Tuzik: Dog = {
-    nickname: 'Tuzik',
-    age: 3,
-    breed: 'Labrador'
-}
-
-// impements
-
-interface Printable {
-    print(): void;
-}
-
-interface Loggable {
-    log(): void;
-}
-
-class Post implements Printable, Loggable {
-    content: string;
-    
-    constructor(content: string) {
-        this.content = content;
-    }
-
-    print() {
-        console.log(this.content);
-    }
-
-    log() {
-        console.log(`Log: ${this.content}`);
+    calculateArea(): number {
+        return Math.PI * this.radius ** 2;
     }
 }
 
-const post = new Post('Hello world');
-// post.print();
-post.log();
+class RectangleImpl implements Rectangle {
+    constructor(public width: number, public height: number) {}
+
+    calculateArea(): number {
+        return this.width * this.height;
+    }
+}
+
+const circle = new CircleImpl(5);
+// console.log(circle.calculateArea());
+
+const rectangle = new RectangleImpl(4, 6);
+console.log(rectangle.calculateArea());
