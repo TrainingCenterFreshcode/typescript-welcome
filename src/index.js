@@ -1,24 +1,24 @@
-/*
-
-
-Створіть простір імен MathFunctions, який містить функції для розрахунку площі кола та площі прямокутника.
-Додайте також коснтанту PI, яка має числове значення 3.14.
-Протестуйте, щоб все працювало.
-
-
-
-*/
-var MathFunctions;
-(function (MathFunctions) {
-    MathFunctions.PI = 3.14;
-    function calculateCircleArea(radius) {
-        return MathFunctions.PI * Math.pow(radius, 2);
+const user1 = {
+    id: 1,
+    name: 'John',
+    email: 'john@gmail.com'
+};
+const Tuzik = {
+    nickname: 'Tuzik',
+    age: 3,
+    breed: 'Labrador'
+};
+class Post {
+    constructor(content) {
+        this.content = content;
     }
-    MathFunctions.calculateCircleArea = calculateCircleArea;
-    function calculateRectangleArea(width, height) {
-        return width * height;
+    print() {
+        console.log(this.content);
     }
-    MathFunctions.calculateRectangleArea = calculateRectangleArea;
-})(MathFunctions || (MathFunctions = {}));
-// console.log(MathFunctions.calculateCircleArea(3));
-console.log(MathFunctions.calculateRectangleArea(3, 4));
+    log() {
+        console.log(`Log: ${this.content}`);
+    }
+}
+const post = new Post('Hello world');
+// post.print();
+post.log();
