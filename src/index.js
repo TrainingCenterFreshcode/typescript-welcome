@@ -1,30 +1,30 @@
-/*
-
-Створити інтерфейс Shape, який містить метод calculateArea().
-Потім створити інтерфейси Circle та Rectangle, які розширюють (extends) інтерфейс Shape.
-
-Створити класи з реалізацією кола та прямокутника - CircleImpl та RectangleImpl відповідно.
-Реалізувати в класах-імплементаціях метод calculateArea() для обчислення площі кола та прямокутника.
-
-*/
-class CircleImpl {
-    constructor(radius) {
-        this.radius = radius;
+function printValue(value) {
+    console.log(`Value: ${value}`);
+}
+const printValueArrow = (value) => {
+    console.log(`Value: ${value}`);
+};
+// printValueArrow(10);
+// printValueArrow('Hello');
+function processValue(value) {
+    if (typeof value === 'number') {
+        console.log(`Value is a number: ${value.toFixed(2)}`);
     }
-    calculateArea() {
-        return Math.PI * Math.pow(this.radius, 2);
+    else if (typeof value === 'string') {
+        console.log(`Value is a string: ${value.toUpperCase()}`);
     }
 }
-class RectangleImpl {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
+// processValue(10);
+// processValue('Hello');
+class Box {
+    constructor(value) {
+        this.value = value;
     }
-    calculateArea() {
-        return this.width * this.height;
+    getValue() {
+        return this.value;
     }
 }
-const circle = new CircleImpl(5);
-// console.log(circle.calculateArea());
-const rectangle = new RectangleImpl(4, 6);
-console.log(rectangle.calculateArea());
+const box1 = new Box(10);
+const box2 = new Box('Hello');
+console.log(typeof box1.getValue());
+console.log(typeof box2.getValue());
