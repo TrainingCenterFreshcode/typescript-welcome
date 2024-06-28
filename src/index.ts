@@ -1,101 +1,57 @@
-abstract class Server {
-    abstract start(): void;
-    abstract stop(): void;
+// tsc --watch ./src/index.ts -t ES6 --expirementalDecorators
+
+// Декоратор класу
+function classDecorator(constructor: Function) {
+    // console.log('classDecorator called');
 }
 
-class HTTPServer extends Server {
-    start(): void {
-        console.log('HTTP Server started');
-    }
-
-    stop(): void {
-        console.log('HTTP Server stopped');
-    }
+// Декоратор властивості класу
+function propertyDecorator(target: any, propertyKey: string) {
+    // console.group('PropertyDecorator');
+    // console.log(propertyKey);
+    // console.dir(target);
+    // console.groupEnd();
 }
 
-class WebSocketServer extends Server {
-    start(): void {
-        console.log('WebSocket Server started');
-    }
+// Декоратор методу
+function methodDecorator(target: any, propertyKey: string, descriptor: PropertyDescriptor): any {
+    // Зберігаємо оригінальний метод
+    const originalMethod = target;
 
-    stop(): void {
-        console.log('WebSocket Server stopped');
-    }
+    // Створюємо новий метод, який замінює оригінальний
+    return (target = function (...args: any[]) {
+        console.log(`Calling with args: ${args}`);
+        return originalMethod.apply(this, args);
+    })
 }
 
-const firstHTTPServer = new HTTPServer();
-const secondHTTPServer = new HTTPServer();
+@classDecorator
+class User {
+    @propertyDecorator
+    private _nickname: string;
 
-// Декоратор для рестарту
-function addRestart(targetClass: Server): void {
-    (targetClass as any).restart = function () {
-        console.log(`Restarting ${this.constructor.name}...`);
-        this.stop();
-        this.start();
-    }
-}
-
-const firstWSServer = new WebSocketServer();
-const secondWSServer = new WebSocketServer();
-
-
-// Декоратор для логування
-function addLogingStart(targetClass: Server): void {
-    const originalStart = targetClass.start.bind(targetClass);
-    const originalStop = targetClass.stop.bind(targetClass);
-
-    targetClass.start = function() {
-        console.log(`[${new Date().toLocaleString()}] Starting ${this.constructor.name}...`);
-        originalStart();
+    constructor(nickname: string) {
+        this._nickname = nickname;
+        // console.log('constructor called');
     }
 
-    targetClass.stop = function() {
-        console.log(`[${new Date().toLocaleString()}] Stopping ${this.constructor.name}...`);
-        originalStop();
+    get nickname(): string {
+        return this._nickname;
+    }
+
+    set nickname(value: string) {
+        this._nickname = value;
+    }
+
+    @methodDecorator
+    greet(greeting: string): string {
+        return `${greeting}, ${this.nickname}!`;
     }
 }
 
-// Декоратор для перевірки доступу
-function addCheckAccessToStop(targetClass: Server): void {
-    const originalStop = targetClass.stop.bind(targetClass);
+const alice = new User('Alice');
+console.log(alice.greet('Hello'));
 
-    targetClass.stop = function() {
-        console.log(`Checking access for ${this.constructor.name}...`);
-        originalStop();
-    }
-}
-
-// Тести
-
-addRestart(firstHTTPServer);
-addRestart(firstWSServer);
-addLogingStart(firstHTTPServer);
-addLogingStart(firstWSServer);
-addCheckAccessToStop(firstHTTPServer);
-addCheckAccessToStop(firstWSServer);
-
-
-
-
-
-console.group('Декоратор');
-
-console.log(firstHTTPServer);
-firstHTTPServer.start();
-(firstHTTPServer as any).restart();
-
-console.log(firstWSServer);
-firstWSServer.start();
-(firstWSServer as any).restart();
-
-console.groupEnd();
-
-
-console.group('Без декоратору');
-
-console.log(secondHTTPServer);
-console.log(secondWSServer);
-secondHTTPServer.start();
-secondWSServer.start();
-
-console.groupEnd();
+// console.log(alice.nickname); // getter
+// alice.nickname = 'Bob'; // setter
+// console.log(alice.nickname); // getter
